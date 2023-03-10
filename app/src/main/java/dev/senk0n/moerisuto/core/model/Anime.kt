@@ -21,6 +21,7 @@ data class Anime(
 
     val producers: List<Producer>,
     val pictures: List<Picture>,
+    val videos: List<Video>,
     val links: List<ExternalLink>,
 ) {
     val format: AnimeFormat get() = entry.type.format
@@ -29,3 +30,5 @@ data class Anime(
 enum class Rating { G, PG, PG13, R, Rp, Rx }
 data class Studio(val name: String)
 data class Producer(val name: String)
+data class Picture(val url: String, val description: String = "")
+data class Video(val url: String, val isTrailer: Boolean = false)

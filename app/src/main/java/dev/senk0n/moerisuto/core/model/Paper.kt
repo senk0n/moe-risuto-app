@@ -15,7 +15,10 @@ data class Paper(
     val rating: Rating,
     val isNSFW: Boolean,
 
+    val publishers: List<Publisher>,
     val links: List<ExternalLink>,
 ) {
     val format: PaperFormat get() = entry.type.format
 }
+
+data class Publisher(val name: String)
