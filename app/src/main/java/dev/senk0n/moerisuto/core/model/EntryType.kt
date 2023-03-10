@@ -1,57 +1,54 @@
 package dev.senk0n.moerisuto.core.model
 
 sealed interface EntryType {
-    data class Anime(val animeType: AnimeType) : EntryType
-    data class Paper(
-        val paperType: PaperType?,
-        val simpleType: SimplePaperType?,
-    ) : EntryType
+    data class Anime(val format: AnimeFormat) : EntryType
+    data class Paper(val format: PaperFormat) : EntryType
 }
 
-enum class AnimeType { TV, Movie, OVA, ONA, Special, Music }
-enum class SimplePaperType { Manga, OneShot, Manhwa, Manhua, Doujinshi, Ranobe, Novel, OEL }
+enum class AnimeFormat { TV, Movie, OVA, ONA, Special, Music }
+enum class PaperFormat { Manga, OneShot, Manhwa, Manhua, Doujinshi, Ranobe, Novel, OEL }
 
-fun SimplePaperType.toPrecise(): PaperType = when (this) {
-    SimplePaperType.Manga -> PaperType.Manga(ComicType.Manga, OriginCountry.Japan, true)
-    SimplePaperType.OneShot -> PaperType.Manga(ComicType.OneShot, OriginCountry.Japan, true)
-    SimplePaperType.Manhwa -> PaperType.Manga(ComicType.Manga, OriginCountry.SouthKorea, true)
-    SimplePaperType.Manhua -> PaperType.Manga(ComicType.Manga, null, true)
-    SimplePaperType.Doujinshi -> PaperType.Manga(ComicType.Manga, OriginCountry.Japan, false)
-    SimplePaperType.Ranobe -> PaperType.Novel(NovelType.Ranobe,true)
-    SimplePaperType.Novel -> PaperType.Novel(NovelType.Novel,true)
-    SimplePaperType.OEL -> PaperType.Manga(ComicType.Manga, OriginCountry.OEL, true)
+fun PaperFormat.toPrecise(): PrecisePaperFormat = when (this) {
+    PaperFormat.Manga -> PrecisePaperFormat.Manga(ComicType.Manga, OriginCountry.Japan, true)
+    PaperFormat.OneShot -> PrecisePaperFormat.Manga(ComicType.OneShot, OriginCountry.Japan, true)
+    PaperFormat.Manhwa -> PrecisePaperFormat.Manga(ComicType.Manga, OriginCountry.SouthKorea, true)
+    PaperFormat.Manhua -> PrecisePaperFormat.Manga(ComicType.Manga, null, true)
+    PaperFormat.Doujinshi -> PrecisePaperFormat.Manga(ComicType.Manga, OriginCountry.Japan, false)
+    PaperFormat.Ranobe -> PrecisePaperFormat.Novel(NovelType.Ranobe,true)
+    PaperFormat.Novel -> PrecisePaperFormat.Novel(NovelType.Novel,true)
+    PaperFormat.OEL -> PrecisePaperFormat.Manga(ComicType.Manga, OriginCountry.OEL, true)
 }
 
-fun PaperType.toSimple(): SimplePaperType? = when (this) {
-    is PaperType.Manga -> if (!isLicensed) SimplePaperType.Doujinshi
+fun PrecisePaperFormat.toSimple(): PaperFormat? = when (this) {
+    is PrecisePaperFormat.Manga -> if (!isLicensed) PaperFormat.Doujinshi
     else when (type) {
-        ComicType.OneShot -> SimplePaperType.OneShot
+        ComicType.OneShot -> PaperFormat.OneShot
         ComicType.Manga -> when (country) {
-            OriginCountry.Japan -> SimplePaperType.Manga
-            OriginCountry.SouthKorea -> SimplePaperType.Manhwa
-            OriginCountry.China -> SimplePaperType.Manhua
-            OriginCountry.Taiwan -> SimplePaperType.Manhua
-            OriginCountry.OEL -> SimplePaperType.OEL
+            OriginCountry.Japan -> PaperFormat.Manga
+            OriginCountry.SouthKorea -> PaperFormat.Manhwa
+            OriginCountry.China -> PaperFormat.Manhua
+            OriginCountry.Taiwan -> PaperFormat.Manhua
+            OriginCountry.OEL -> PaperFormat.OEL
             else -> null
         }
     }
-    is PaperType.Novel -> when (type) {
-        NovelType.Ranobe -> SimplePaperType.Ranobe
-        NovelType.Novel -> SimplePaperType.Novel
+    is PrecisePaperFormat.Novel -> when (type) {
+        NovelType.Ranobe -> PaperFormat.Ranobe
+        NovelType.Novel -> PaperFormat.Novel
     }
 }
 
-sealed interface PaperType {
+sealed interface PrecisePaperFormat {
     data class Manga(
         val type: ComicType,
         val country: OriginCountry?,
         val isLicensed: Boolean
-    ) : PaperType
+    ) : PrecisePaperFormat
 
     data class Novel(
         val type: NovelType,
         val isLicensed: Boolean
-    ) : PaperType
+    ) : PrecisePaperFormat
 }
 
 enum class NovelType { Ranobe, Novel }

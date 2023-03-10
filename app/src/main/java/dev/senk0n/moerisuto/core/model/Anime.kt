@@ -24,7 +24,7 @@ data class Anime(
     val pictures: List<Picture>,
     val links: List<ExternalLink>,
 ) {
-    val type: AnimeType get() = entry.type.animeType
+    val format: AnimeFormat get() = entry.type.format
 }
 
 enum class Rating { G, PG, PG13, R, Rp, Rx }

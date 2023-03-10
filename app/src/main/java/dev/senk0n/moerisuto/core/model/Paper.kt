@@ -21,4 +21,6 @@ data class Paper(
     val pictures: List<Picture>,
 
     val links: List<ExternalLink>,
-)
+) {
+    val format: PaperFormat get() = entry.type.format
+}
