@@ -14,11 +14,6 @@ data class Paper(
     val nextChapter: Date?,
     val rating: Rating,
     val isNSFW: Boolean,
-    val studios: List<Studio>,
-
-    val producers: List<Producer>,
-    val licensors: List<Licensor>,
-    val pictures: List<Picture>,
 
     val links: List<ExternalLink>,
 ) {

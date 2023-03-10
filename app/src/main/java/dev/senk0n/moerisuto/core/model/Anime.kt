@@ -20,7 +20,6 @@ data class Anime(
     val studios: List<Studio>,
 
     val producers: List<Producer>,
-    val licensors: List<Licensor>,
     val pictures: List<Picture>,
     val links: List<ExternalLink>,
 ) {
@@ -30,4 +29,3 @@ data class Anime(
 enum class Rating { G, PG, PG13, R, Rp, Rx }
 data class Studio(val name: String)
 data class Producer(val name: String)
-data class Licensor(val name: String)
