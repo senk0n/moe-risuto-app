@@ -21,4 +21,5 @@ data class Paper(
     val format: PaperFormat get() = entry.type.format
 }
 
-data class Publisher(val name: String)
+@JvmInline
+value class Publisher(val name: String)

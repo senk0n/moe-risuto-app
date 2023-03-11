@@ -2,7 +2,7 @@ package dev.senk0n.moerisuto.core.model
 
 /**
  * uses [standard date format](https://en.wikipedia.org/wiki/ISO_8601) yyyy-MM-dd
- * could be parsed from [String]
+ * could be constructed from [String] and mapped [toSeason]
  */
 data class Date(
     val year: Int?,
