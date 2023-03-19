@@ -1,7 +1,9 @@
 package dev.senk0n.moerisuto.core.model
 
+import dev.senk0n.moerisuto.core.className
+
 interface Extra {
-    val type: String get() = this.javaClass.simpleName
+    val type: String get() = className
 }
 
 interface TextExtra : Extra {

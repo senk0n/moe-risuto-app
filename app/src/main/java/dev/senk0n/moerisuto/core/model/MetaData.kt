@@ -1,9 +1,10 @@
 package dev.senk0n.moerisuto.core.model
 
+import dev.senk0n.moerisuto.core.className
 import kotlin.time.Duration
 
 abstract class Service(val url: String) {
-    open val name: String get() = this.javaClass.simpleName
+    open val name: String get() = className
 }
 
 sealed interface Issues {
