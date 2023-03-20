@@ -6,6 +6,7 @@ data class Entry(
     val title: Title,
     val image: Image,
     val status: Status,
+    val progress: Progress?,
     val score: Int,
     val start: Date?,
 ) {
