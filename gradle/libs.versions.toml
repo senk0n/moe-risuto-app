@@ -1,6 +1,6 @@
 [versions]
-android-application = "8.1.0-alpha11"
-android-library = "8.1.0-alpha11"
+android-application = "8.2.0-alpha03"
+android-library = "8.2.0-alpha03"
 androidx-junit = "1.1.5"
 espresso-core = "3.5.1"
 jetbrains-kotlin = "1.8.10"
