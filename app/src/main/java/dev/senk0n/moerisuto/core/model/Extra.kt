@@ -14,21 +14,25 @@ interface TextExtra : Extra {
     val text: String
 }
 
-interface LinkExtra : TextExtra {
+interface LinkExtra : Extra {
     val url: String
 }
 
 data class Source(override val text: String) : TextExtra
-data class ExternalLink(override val url: String, override val text: String = "") : LinkExtra
+data class ExternalLink(
+    override val url: String,
+    override val text: String = ""
+) : LinkExtra, TextExtra
+
 data class Studio(override val text: String) : TextExtra
 data class Publisher(override val text: String) : TextExtra
 data class Producer(override val text: String) : TextExtra
 data class Staff(override val text: String, val role: String) : TextExtra
 data class Tag(override val text: String) : TextExtra
 data class Genre(override val text: String) : TextExtra
-data class Picture(override val url: String, override val text: String = "") : LinkExtra
+data class Picture(override val url: String, override val text: String = "") : LinkExtra, TextExtra
 data class Video(
     override val url: String,
     val isTrailer: Boolean = false,
     override val text: String = ""
-) : LinkExtra
+) : LinkExtra, TextExtra

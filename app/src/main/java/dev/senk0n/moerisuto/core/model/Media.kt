@@ -6,7 +6,7 @@ data class Media(
     val entry: Entry,
     val userStatus: UserStatus,
     val synopsis: String,
-    val source: Source,
+    val source: Source?,
     val count: Int?,
     val volumes: Int?,
     val duration: Duration?,
