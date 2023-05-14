@@ -1,5 +1,6 @@
-package dev.senk0n.moerisuto.preferences.model
+package dev.senk0n.moerisuto.preferences
 
+import dev.senk0n.moerisuto.preferences.model.PreferenceTag
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
