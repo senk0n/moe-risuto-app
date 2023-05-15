@@ -3,6 +3,7 @@ package dev.senk0n.moerisuto.core.model
 /**
  * uses [standard date format](https://en.wikipedia.org/wiki/ISO_8601) yyyy-MM-dd
  * could be constructed from [String] and mapped [toSeason]
+ * TODO: migrate to kotlinx-datetime
  */
 data class Date(
     val year: Int?,
