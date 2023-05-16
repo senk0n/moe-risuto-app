@@ -16,6 +16,7 @@ interface SinglePreference<T> : Preference {
 }
 
 interface ObservablePreference<T> : Preference {
+    fun get(): T?
     val value: StateFlow<T>
     val default: T
 }
