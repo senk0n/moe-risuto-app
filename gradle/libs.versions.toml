@@ -1,6 +1,5 @@
 [versions]
-android-application = "8.2.0-alpha03"
-android-library = "8.2.0-alpha03"
+android-gradle-plugin = "8.2.0-alpha04"
 androidx-junit = "1.1.5"
 decompose = "2.0.0-alpha-02"
 espresso-core = "3.5.1"
@@ -40,8 +39,8 @@ lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel
 
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "android-application" }
-android-library = { id = "com.android.library", version.ref = "android-library" }
+android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 jetbrains-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "jetbrains-kotlin" }
 google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
