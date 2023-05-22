@@ -1,14 +1,11 @@
 package dev.senk0n.moerisuto.core.navigation
 
-class ComponentFactory(
-    private val componentProviderMap: Map<ComponentConfig, Lazy<ComponentProvider>>
-) {
-    fun createView(config: ComponentConfig): ComponentView? {
-        val provider = componentProviderMap[config]?.value
-        return provider?.provide(config)
-    }
-}
+import dev.senk0n.moerisuto.core.di.ClassKey
+import dev.senk0n.moerisuto.core.di.DepProvider
+import dev.senk0n.moerisuto.core.di.MultibindingFactory
+import me.tatarka.inject.annotations.Inject
 
-fun interface ComponentProvider {
-    fun provide(config: ComponentConfig): ComponentView
-}
+@Inject
+class ComponentFactory(
+    override val providerMap: Map<ClassKey, DepProvider<ComponentConfig, ComponentView>>
+) : MultibindingFactory<ComponentConfig, ComponentView>
