@@ -1,19 +1,18 @@
 package dev.senk0n.moerisuto.core.di
 
-typealias ClassKey = String
+import kotlin.reflect.KClass
 
-inline fun <reified Key : P, P, R> provideMapEntry(
+inline fun <reified Key : P, P : Any, R> provideMapEntry(
     crossinline provider: (Key) -> R
-): Pair<ClassKey, DepProvider<P, R>> =
-    (Key::class.qualifiedName as ClassKey) to DepProvider {
-        val parameter = it as Key
-        provider.invoke(parameter)
-    }
+): Pair<KClass<out P>, DepProvider<P, R>> = Key::class to DepProvider {
+    val parameter = it as Key
+    provider.invoke(parameter)
+}
 
-interface MultibindingFactory<in K : Any, out R : Any> {
-    val providerMap: Map<ClassKey, DepProvider<K, R>>
-    fun create(key: K): R? {
-        val provider = providerMap[key::class.qualifiedName]
+interface MultibindingFactory<Key : Any, out R : Any> {
+    val providerMap: Map<KClass<out Key>, DepProvider<Key, R>>
+    fun create(key: Key): R? {
+        val provider = providerMap[key::class]
         return provider?.provide(key)
     }
 }
