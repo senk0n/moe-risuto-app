@@ -1,24 +1,29 @@
 package dev.senk0n.moerisuto.core.model
 
+import dev.senk0n.moerisuto.core.className
+
 data class Entry(
-    val id: EntryId,
-    val type: EntryType,
+    override val id: EntryId,
+    override val format: EntryFormat,
     val title: Title,
     val image: Image,
     val status: Status,
     val progress: Progress?,
     val score: Int,
     val start: Date?,
-) {
+) : ShortEntry {
     val season: Season? get() = start?.toSeason()
+}
+
+interface ShortEntry {
+    val id: EntryId
+    val format: EntryFormat
 }
 
 data class EntryId(val id: String, val service: Service, val extraId: EntryId? = null)
 
-sealed interface EntryType {
-    data class Anime(val format: AnimeFormat) : EntryType
-    data class Manga(val format: MangaFormat) : EntryType
+sealed interface EntryFormat : TextExtra {
+    interface Anime : EntryFormat
+    interface Manga : EntryFormat
+    interface Novel : EntryFormat
 }
-
-enum class AnimeFormat { TV, Movie, OVA, ONA, Special, Music }
-enum class MangaFormat { Manga, OneShot, Manhwa, Manhua, Doujinshi, Ranobe, Novel, OEL }
