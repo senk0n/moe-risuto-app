@@ -10,18 +10,22 @@ import kotlin.reflect.KClass
 class ComposeFactory(
     private val providerMap: Map<KClass<out ComponentView>, ComposeProvider>
 ) {
-    fun create(key: ComponentView): (@Composable (ComponentView, Modifier) -> Unit)? {
+    @Composable
+    fun Display(key: ComponentView, modifier: Modifier = Modifier, error: @Composable () -> Unit) {
         val provider = providerMap[key::class]
-        return provider?.provide()
+        provider?.Provide(key, modifier) ?: error()
     }
 }
 
 fun interface ComposeProvider {
-    fun provide(): @Composable (ComponentView, Modifier) -> Unit
+    @Composable
+    fun Provide(component: ComponentView, modifier: Modifier)
 }
 
-inline fun <reified Key : ComponentView> provideCompose(
-    crossinline provider: () -> @Composable (ComponentView, Modifier) -> Unit
-): Pair<KClass<out ComponentView>, ComposeProvider> = Key::class to ComposeProvider {
-    provider()
-}
+inline fun <reified Component : ComponentView> provideCompose(
+    crossinline provider: @Composable (Component, Modifier) -> Unit
+): Pair<KClass<out ComponentView>, ComposeProvider> =
+    Component::class to ComposeProvider { component, modifier ->
+        val parameter = component as Component
+        provider(parameter, modifier)
+    }
