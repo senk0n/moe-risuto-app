@@ -3,8 +3,8 @@ package dev.senk0n.moerisuto.core.navigation
 import com.arkivanov.essenty.parcelable.Parcelable
 
 interface ComponentView {
-    fun produce(event: ComponentEvent)
+    fun send(event: ComponentIntent)
 }
 
 interface ComponentConfig : Parcelable
-interface ComponentEvent
+interface ComponentIntent
