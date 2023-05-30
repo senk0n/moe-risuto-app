@@ -10,10 +10,17 @@ class TabProvider(
 ) {
     fun find(key: ComponentConfig): TabMetadata? {
         val provider = tabs[key::class]
-        return provider?.provide()
+        return provider?.provide(key)
     }
 }
 
 fun interface TabMetaProvider {
-    fun provide(): TabMetadata
+    fun provide(key: ComponentConfig): TabMetadata
 }
+
+inline fun <reified Key : ComponentConfig> provideTab(
+    crossinline provider: (ComponentConfig) -> TabMetadata
+): Pair<KClass<out ComponentConfig>, TabMetaProvider> =
+    Key::class to TabMetaProvider { config ->
+        provider.invoke(config)
+    }

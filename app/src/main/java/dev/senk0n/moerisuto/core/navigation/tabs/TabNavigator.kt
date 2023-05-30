@@ -10,7 +10,7 @@ interface TabNavigation {
 }
 
 interface TabsNavigation {
-    val activeTabs: List<TabConfig>
+    val activeTabs: List<TabMetadata>
     fun switchTab(config: ComponentConfig)
     fun pushTab(config: ComponentConfig)
     fun editTabDot(config: ComponentConfig, toggle: Boolean)
