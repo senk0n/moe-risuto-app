@@ -1,7 +1,5 @@
 package dev.senk0n.moerisuto.core.model
 
-import dev.senk0n.moerisuto.core.className
-
 data class Entry(
     override val id: EntryId,
     override val format: EntryFormat,
@@ -20,7 +18,11 @@ interface ShortEntry {
     val format: EntryFormat
 }
 
-data class EntryId(val id: String, val service: Service, val extraId: EntryId? = null)
+data class EntryId(
+    val id: String,
+    val service: Service,
+    val extraIds: List<EntryId> = emptyList()
+)
 
 sealed interface EntryFormat : TextExtra {
     interface Anime : EntryFormat
