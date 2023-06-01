@@ -3,6 +3,7 @@ package dev.senk0n.moerisuto.ui.theme
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -39,20 +40,28 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun MoeRisutoTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
+    darkThemeOverride: Boolean? = null,
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+    val darkTheme: Boolean = darkThemeOverride ?: isSystemInDarkTheme()
+    val colorScheme: ColorScheme = dynamicColorScheme(dynamicColor, darkTheme)
+        ?: if (darkTheme) DarkColorScheme else LightColorScheme
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
+    StatusBarColor(colorScheme, darkTheme)
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = Typography,
+        content = content
+    )
+}
+
+@Composable
+private fun StatusBarColor(
+    colorScheme: ColorScheme,
+    darkTheme: Boolean
+) {
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -61,10 +70,18 @@ fun MoeRisutoTheme(
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
 }
+
+@Composable
+private fun dynamicColorScheme(
+    dynamicColor: Boolean,
+    darkTheme: Boolean
+): ColorScheme? = if (dynamicColor && dynamicColorSupport()) {
+    val context = LocalContext.current
+    if (darkTheme) dynamicDarkColorScheme(context)
+    else dynamicLightColorScheme(context)
+} else null
+
+
+@Composable
+private fun dynamicColorSupport(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
