@@ -1,4 +1,4 @@
-package dev.senk0n.moerisuto.core.di
+package dev.senk0n.moerisuto.core.navigation.di
 
 import com.arkivanov.decompose.ComponentContext
 import kotlin.reflect.KClass
