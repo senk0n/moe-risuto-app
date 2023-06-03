@@ -22,7 +22,7 @@ fun interface ComponentProvider {
 
 inline fun <reified Config : ComponentConfig> provideComponent(
     crossinline provider: ComponentContext.(Config) -> ComponentView
-): Pair<KClass<out Config>, ComponentProvider> =
+): Pair<KClass<out ComponentConfig>, ComponentProvider> =
     Config::class to ComponentProvider { config, context ->
         val parameter = config as Config
         context.provider(parameter)
