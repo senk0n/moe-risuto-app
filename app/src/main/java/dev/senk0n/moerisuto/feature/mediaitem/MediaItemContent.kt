@@ -19,11 +19,10 @@ fun MediaItemContent(component: MediaItemComponent, modifier: Modifier) {
     }
 }
 
-@Component
-abstract class MediaItemDIContent {
+interface MediaItemDIContent {
     @Provides
     @IntoMap
-    protected fun provide() =
+    fun provideMediaItemContent() =
         provideCompose<MediaItemComponent> { component, modifier ->
             MediaItemContent(component = component, modifier = modifier)
         }
