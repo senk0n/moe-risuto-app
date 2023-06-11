@@ -1,4 +1,4 @@
-package dev.senk0n.moerisuto.core.navigation.compose
+package dev.senk0n.moerisuto.core.compose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
