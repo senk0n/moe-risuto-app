@@ -1,4 +1,4 @@
-package dev.senk0n.moerisuto.feature.mediaitem
+package dev.senk0n.moerisuto.feature.mylist
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
@@ -7,24 +7,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
 import dev.senk0n.moerisuto.core.compose.provideCompose
-import me.tatarka.inject.annotations.Component
+import dev.senk0n.moerisuto.feature.mediaitem.MediaItemComponent
 import me.tatarka.inject.annotations.IntoMap
 import me.tatarka.inject.annotations.Provides
 
 @Composable
-fun MediaItemContent(component: MediaItemComponent, modifier: Modifier) {
+fun MyListContent(component: MyListComponent, modifier: Modifier) {
     val state by component.state.subscribeAsState()
     Column(modifier = modifier) {
-        Text(text = "MediaItemContent is Loading: ${state.isLoading}")
+        Text(text = "MyListContent is Loading: ${state.isLoading}")
         Text(text = "config: ${state.config}")
     }
 }
 
-interface MediaItemDIContent {
+interface MyListDIContent {
     @Provides
     @IntoMap
-    fun provideMediaItemContent() =
-        provideCompose<MediaItemComponent> { component, modifier ->
-            MediaItemContent(component, modifier)
+    fun provideMyListContent() =
+        provideCompose<MyListComponent> { component, modifier ->
+            MyListContent(component, modifier)
         }
 }
