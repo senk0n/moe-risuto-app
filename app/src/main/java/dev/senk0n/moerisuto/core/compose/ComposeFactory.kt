@@ -22,8 +22,8 @@ fun interface ComposeProvider {
 }
 
 inline fun <reified Component : ComponentView> provideCompose(
-    crossinline provider: @Composable (Component, Modifier) -> Unit
+    crossinline provider: @Composable Modifier.(Component) -> Unit
 ): Pair<KClass<out ComponentView>, ComposeProvider> =
     Component::class to ComposeProvider { component, modifier ->
-        provider.invoke(component as Component, modifier)
+        modifier.provider(component as Component)
     }
