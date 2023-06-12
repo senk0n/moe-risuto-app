@@ -24,7 +24,7 @@ interface MyListDIContent {
     @Provides
     @IntoMap
     fun provideMyListContent() =
-        provideCompose<MyListComponent> {
+        provideCompose<MyListComponentImpl> {
             MyListContent(it, this)
         }
 }

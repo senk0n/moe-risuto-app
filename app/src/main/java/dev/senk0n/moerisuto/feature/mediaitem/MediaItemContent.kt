@@ -24,7 +24,7 @@ interface MediaItemDIContent {
     @Provides
     @IntoMap
     fun provideMediaItemContent() =
-        provideCompose<MediaItemComponent> {
+        provideCompose<MediaItemComponentImpl> {
             MediaItemContent(it, this)
         }
 }
