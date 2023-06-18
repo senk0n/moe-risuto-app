@@ -4,9 +4,9 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.push
 import dev.senk0n.moerisuto.core.navigation.ComponentConfig
-import dev.senk0n.moerisuto.core.navigation.TabsScope
 import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
+import me.tatarka.inject.annotations.Scope
 
 class RootNavigator(
     private val tabsNavigation: TabsNavigation,
@@ -33,8 +33,12 @@ class TabsNavigation(
     }
 }
 
+@Scope
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER)
+annotation class TabsScope
+
 @TabsScope
 @Component
-abstract class TabNavigationDI(
-    @get:TabsScope @get:Provides protected val rootNavigator: RootNavigator
+abstract class AppDI(
+    @get:TabsScope @get:Provides val rootNavigator: RootNavigator
 )
