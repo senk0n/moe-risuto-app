@@ -1,7 +1,7 @@
 package dev.senk0n.moerisuto.core.compose
 
-import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.staticCompositionLocalOf
 
-val LocalComposeFactory = compositionLocalOf<ComposeFactory> {
+val LocalComposeFactory = staticCompositionLocalOf<ComposeFactory> {
     error("can't find ComposeFactory to provide")
 }
