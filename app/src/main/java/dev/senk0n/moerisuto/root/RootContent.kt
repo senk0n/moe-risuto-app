@@ -36,19 +36,18 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
         Scaffold(
             modifier = modifier,
             content = {
-                Children(
-                    stack = childStack,
-                    modifier = Modifier
-                        .padding(it)
-                        .fillMaxWidth()
-                ) {
-                    Column {
-                        Text(text = "===========")
-                        Text(text = "RootContent")
-                        Text(text = "===========")
-                        Spacer(modifier = Modifier.height(8.dp))
-                        val provider = LocalComposeFactory.current.create(it.instance)
-                        provider?.Display(it.instance, Modifier)
+                Column(modifier = Modifier.padding(it)) {
+                    Text(text = "===========")
+                    Text(text = "RootContent")
+                    Text(text = "===========")
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Children(
+                        stack = childStack,
+                        modifier = Modifier.fillMaxWidth()
+                    ) { child ->
+                        val provider = LocalComposeFactory.current.create(child.instance)
+                        provider?.Display(child.instance, Modifier)
                     }
                 }
             },
@@ -56,7 +55,8 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
                 NavigationBar(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    component.tabsMetadata.value.forEach {
+                    val tabs by component.tabsMetadata.subscribeAsState()
+                    tabs.mainTabs.forEach {
                         NavigationBarItem(
                             selected = it.config == childStack.active.configuration,
                             onClick = { component.send(ClickTab(it.config)) },

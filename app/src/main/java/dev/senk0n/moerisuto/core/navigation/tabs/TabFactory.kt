@@ -5,10 +5,10 @@ import me.tatarka.inject.annotations.Inject
 import kotlin.reflect.KClass
 
 @Inject
-class TabProvider(
+class TabFactory(
     private val tabs: Map<KClass<out ComponentConfig>, TabMetaProvider>,
 ) {
-    fun find(key: ComponentConfig): TabMetadata? {
+    fun create(key: ComponentConfig): TabMetadata? {
         val provider = tabs[key::class]
         return provider?.provide(key)
     }
