@@ -4,9 +4,9 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.active
 import com.arkivanov.decompose.router.stack.bringToFront
-import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
+import com.arkivanov.decompose.value.update
 import dev.senk0n.moerisuto.core.navigation.ComponentConfig
 import dev.senk0n.moerisuto.core.navigation.ComponentFactoryDI
 import dev.senk0n.moerisuto.core.navigation.ComponentView
@@ -24,6 +24,7 @@ class RootNavigator(
         val tabComponent = tabStackProvider().active.instance as? TabComponentView
         tabComponent?.inTabNavigation()
     }
+
     fun navigateThroughTabs(navigateTabs: TabsNavigation.() -> Unit) {
         navigateTabs(tabsNavigation)
     }
@@ -33,14 +34,24 @@ fun interface TabStackProvider : () -> Value<ChildStack<ComponentConfig, Compone
 
 @Inject
 class TabsNavigation(
-    private val tabNavigation: StackNavigation<ComponentConfig>
+    private val tabNavigation: StackNavigation<ComponentConfig>,
+    private val tabsMetadata: MutableValue<TabsMetadata>,
+    private val tabFactory: TabFactory,
 ) {
     fun switchTab(config: ComponentConfig) {
         tabNavigation.bringToFront(config)
     }
-    fun pushTab(config: ComponentConfig) {
-        tabNavigation.push(config)
+
+    fun addTab(config: ComponentConfig) {
+        val tab = tabFactory.create(config)
+        if (tab != null) {
+            tabsMetadata.update {
+                it.copy(mainTabs = it.mainTabs + tab)
+            }
+        }
     }
+
+    val tabs: Value<TabsMetadata> = tabsMetadata
 }
 
 @Scope
@@ -52,16 +63,16 @@ annotation class TabsScope
 abstract class AppDI(
     @Component val componentFactoryDI: ComponentFactoryDI,
     @Component val navDI: NavDI,
-)
+) {
+    abstract val rootNavigator: RootNavigator
+    abstract val tabsNavigation: TabsNavigation
+}
 
 @Component
 abstract class NavDI(
     @get:Provides val tabNavigation: StackNavigation<ComponentConfig>,
     @get:Provides val tabStackProvider: TabStackProvider,
 ) {
-    abstract val rootNavigator: RootNavigator
-    abstract val tabsNavigation: TabsNavigation
-
     @get:Provides
     val tabsMetadata: MutableValue<TabsMetadata> = MutableValue(TabsMetadata())
 }

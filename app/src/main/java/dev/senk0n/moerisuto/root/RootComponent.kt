@@ -27,14 +27,11 @@ class RootComponentImpl(
     componentContext: ComponentContext
 ) : RootComponent, ComponentContext by componentContext {
     private var componentFactoryDI: ComponentFactoryDI = ComponentFactoryDI::class.create()
-    private var componentFactory: ComponentFactory = componentFactoryDI.componentFactory
-
     private val tabNavigation = StackNavigation<ComponentConfig>()
 
     private val appDI: AppDI
-    private val navDI: NavDI
     init {
-        navDI = NavDI::class.create(
+        val navDI = NavDI::class.create(
             tabNavigation = tabNavigation,
             tabStackProvider = { tabStack },
         )
@@ -44,19 +41,19 @@ class RootComponentImpl(
         )
     }
 
-    override val tabsMetadata: MutableValue<TabsMetadata> = navDI.tabsMetadata
+    override val tabsMetadata: Value<TabsMetadata> = appDI.tabsNavigation.tabs
 
     private val appContext: AppContext = AppComponentContextImpl(componentContext, appDI)
     override val tabStack = appContext.appChildStack(
         source = tabNavigation,
         initialStack = { listOf(MyListConfig("anime", "completed")) },
-        childFactory = componentFactory::create
+        childFactory = appDI.componentFactoryDI.componentFactory::create
     )
 
     override fun send(event: ComponentIntent) {
         when (event) {
             is ClickTab -> {
-                appDI.navDI.rootNavigator.navigateThroughTabs { switchTab(event.config) }
+                appDI.rootNavigator.navigateThroughTabs { switchTab(event.config) }
             }
         }
     }
