@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,6 +14,7 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
 import dev.senk0n.moerisuto.core.compose.LocalComposeFactory
 import dev.senk0n.moerisuto.core.compose.provideCompose
+import dev.senk0n.moerisuto.core.navigation.ComponentIntent
 import me.tatarka.inject.annotations.IntoMap
 import me.tatarka.inject.annotations.Provides
 
@@ -26,6 +28,11 @@ fun MyListContent(component: MyListComponent, modifier: Modifier) {
             Text(text = "config: ${state.config}")
         }
         Spacer(modifier = Modifier.height(8.dp))
+        Button(onClick = {
+            component.send(object : ComponentIntent {})
+        }) {
+            Text(text = "add tab")
+        }
 
         Children(
             stack = childStack,

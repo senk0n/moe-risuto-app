@@ -4,15 +4,12 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.decompose.value.update
-import dev.senk0n.moerisuto.core.className
 import dev.senk0n.moerisuto.core.model.Entry
-import dev.senk0n.moerisuto.core.model.EntryFormat
-import dev.senk0n.moerisuto.core.model.Progress
 import dev.senk0n.moerisuto.core.navigation.ComponentConfig
 import dev.senk0n.moerisuto.core.navigation.ComponentIntent
 import dev.senk0n.moerisuto.core.navigation.ComponentView
 import dev.senk0n.moerisuto.core.navigation.provideComponent
+import dev.senk0n.moerisuto.core.navigation.tabs.RootNavigator
 import dev.senk0n.moerisuto.core.navigation.tabs.TabComponentView
 import dev.senk0n.moerisuto.core.navigation.tabs.TabMetadata
 import dev.senk0n.moerisuto.core.navigation.tabs.provideTab
@@ -28,15 +25,16 @@ interface MyListComponent : TabComponentView {
 
 class MyListComponentImpl(
     private val config: MyListConfig,
-    private val appContext: AppContext
+    private val appContext: AppContext,
+    private val rootNavigator: RootNavigator,
 ) : MyListComponent, AppContext by appContext {
     override val state: MutableValue<MyListState> = MutableValue(MyListState(config = config))
 
     override val navigation = StackNavigation<ComponentConfig>()
     override val childStack: Value<ChildStack<ComponentConfig, ComponentView>> =
-        appContext.appChildStack(
+        appChildStack(
             source = navigation,
-            initialStack = { listOf() },
+            initialStack = { listOf(MediaItemConfig("anime", "completed")) },
             childFactory = appDI.componentFactoryDI.componentFactory::create
         )
 
@@ -44,6 +42,11 @@ class MyListComponentImpl(
         when (event) {
             is OpenEntryDetailsIntent -> {
 
+            }
+
+            else -> rootNavigator.navigateThroughTabs {
+                val config = MyListConfig("oengrerg", "FFFFFFF")
+                addTab(config)
             }
         }
     }
@@ -60,7 +63,9 @@ interface MyListDIComponent {
     @Provides
     @IntoMap
     fun provideMyListComponent() =
-        provideComponent<MyListConfig> { MyListComponentImpl(it, this) }
+        provideComponent<MyListConfig> {
+            MyListComponentImpl(it, this, appDI.rootNavigator)
+        }
 
     @Provides
     @IntoMap
