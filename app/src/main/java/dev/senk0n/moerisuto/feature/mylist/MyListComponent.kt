@@ -2,6 +2,7 @@ package dev.senk0n.moerisuto.feature.mylist
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import dev.senk0n.moerisuto.core.model.Entry
@@ -44,9 +45,9 @@ class MyListComponentImpl(
 
             }
 
-            else -> rootNavigator.navigateThroughTabs {
-                val config = MyListConfig("oengrerg", "FFFFFFF")
-                addTab(config)
+            else -> rootNavigator.navigateWithinTab {
+                val config = MediaItemConfig("oengrerg", "FFFFFFF")
+                navigation.push(config)
             }
         }
     }
