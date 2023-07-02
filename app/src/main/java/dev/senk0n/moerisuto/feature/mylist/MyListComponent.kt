@@ -36,7 +36,7 @@ class MyListComponentImpl(
         appChildStack(
             source = navigation,
             initialStack = { listOf(MediaItemConfig("anime", "completed")) },
-            childFactory = appDI.componentFactoryDI.componentFactory::create
+            childFactory = { key, context -> appDI.componentFactoryDI.componentFactory.create(key, context) }
         )
 
     override fun send(event: ComponentIntent) {
