@@ -2,6 +2,7 @@ package dev.senk0n.moerisuto.core.navigation.tabs
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.StackNavigator
 import com.arkivanov.decompose.router.stack.active
 import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.value.MutableValue
@@ -51,6 +52,12 @@ class TabsNavigation(
         }
     }
 
+    fun removeTab(config: ComponentConfig) {
+        tabsMetadata.update {
+            it.copy(mainTabs = it.mainTabs.filterNot { tab -> tab.config == config })
+        }
+    }
+
     val tabs: Value<TabsMetadata> = tabsMetadata
 }
 
@@ -63,10 +70,7 @@ annotation class TabsScope
 abstract class AppDI(
     @Component val componentFactoryDI: ComponentFactoryDI,
     @Component val navDI: NavDI,
-) {
-    abstract val rootNavigator: RootNavigator
-    abstract val tabsNavigation: TabsNavigation
-}
+)
 
 @Component
 abstract class NavDI(
@@ -75,4 +79,11 @@ abstract class NavDI(
 ) {
     @get:Provides
     val tabsMetadata: MutableValue<TabsMetadata> = MutableValue(TabsMetadata())
+}
+
+fun <C : Any> StackNavigator<C>.bringToFrontEq(configuration: C, onComplete: () -> Unit = {}) {
+    navigate(
+        transformer = { stack -> stack.filterNot { it == configuration } + configuration },
+        onComplete = { _, _ -> onComplete() },
+    )
 }
