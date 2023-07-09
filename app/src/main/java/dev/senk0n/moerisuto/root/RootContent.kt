@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AccessibleForward
+import androidx.compose.material.icons.outlined.Tab
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -61,7 +61,7 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
                             selected = it.config == childStack.active.configuration,
                             onClick = { component.send(ClickTab(it.config)) },
                             icon = {
-                                val icon = Icons.Outlined.AccessibleForward
+                                val icon = Icons.Outlined.Tab
                                 val painter = rememberVectorPainter(image = icon)
                                 Icon(painter = painter, null)
                             },

@@ -29,7 +29,7 @@ fun MyListContent(component: MyListComponent, modifier: Modifier) {
         }
         Spacer(modifier = Modifier.height(8.dp))
         Button(onClick = {
-            component.send(object : ComponentIntent {})
+            component.send(OpenEntryDetailsIntent())
         }) {
             Text(text = "add tab")
         }
