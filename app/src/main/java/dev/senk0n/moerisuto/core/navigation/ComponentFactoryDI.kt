@@ -1,8 +1,8 @@
 package dev.senk0n.moerisuto.core.navigation
 
 import dev.senk0n.moerisuto.core.navigation.tabs.TabFactory
-import dev.senk0n.moerisuto.feature.mediaitem.MediaItemDIComponent
-import dev.senk0n.moerisuto.feature.mylist.MyListDIComponent
+import dev.senk0n.moerisuto.feature.mediaitem.MediaItemDIModule
+import dev.senk0n.moerisuto.feature.mylist.MyListDIModule
 import me.tatarka.inject.annotations.Component
 
 @Component
@@ -12,5 +12,5 @@ abstract class ComponentFactoryDI : ComponentsMapProviders {
 }
 
 interface ComponentsMapProviders :
-    MediaItemDIComponent,
-    MyListDIComponent
+    MediaItemDIModule,
+    MyListDIModule

@@ -62,7 +62,7 @@ data class MyListState(
     val entriesList: List<Entry> = emptyList(),
 )
 
-interface MyListDIComponent {
+interface MyListDIModule {
     @Provides
     @IntoMap
     fun provideMyListComponent() =

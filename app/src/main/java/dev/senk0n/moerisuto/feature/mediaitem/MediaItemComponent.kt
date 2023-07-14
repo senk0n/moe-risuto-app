@@ -33,7 +33,7 @@ data class MediaState(
     val media: Media? = null,
 )
 
-interface MediaItemDIComponent {
+interface MediaItemDIModule {
     @Provides
     @IntoMap
     fun provideMediaItemComponent() =
