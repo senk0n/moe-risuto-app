@@ -20,9 +20,8 @@ class MediaItemComponentImpl(
 ) : MediaItemComponent, ComponentContext by componentContext {
     override val state: MutableValue<MediaState> = MutableValue(MediaState(config = config))
 
-    override fun send(event: ComponentIntent) {
-        when (event) {
-        }
+    override fun send(event: ComponentIntent) = when (event) {
+        else -> Unit
     }
 
 }
@@ -36,6 +35,7 @@ data class MediaState(
 interface MediaItemDIModule {
     @Provides
     @IntoMap
-    fun provideMediaItemComponent() =
-        provideComponent<MediaItemConfig> { MediaItemComponentImpl(this, it) }
+    fun provideMediaItemComponent() = provideComponent<MediaItemConfig> {
+        MediaItemComponentImpl(this, it)
+    }
 }

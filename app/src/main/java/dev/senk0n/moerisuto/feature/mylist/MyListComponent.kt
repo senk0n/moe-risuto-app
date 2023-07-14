@@ -2,7 +2,6 @@ package dev.senk0n.moerisuto.feature.mylist
 
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import dev.senk0n.moerisuto.core.model.Entry
@@ -12,7 +11,6 @@ import dev.senk0n.moerisuto.core.navigation.ComponentIntent
 import dev.senk0n.moerisuto.core.navigation.ComponentView
 import dev.senk0n.moerisuto.core.navigation.provideComponent
 import dev.senk0n.moerisuto.core.navigation.tabs.AppDI
-import dev.senk0n.moerisuto.core.navigation.tabs.RootNavigator
 import dev.senk0n.moerisuto.core.navigation.tabs.TabComponentView
 import dev.senk0n.moerisuto.core.navigation.tabs.TabMetadata
 import dev.senk0n.moerisuto.core.navigation.tabs.bringToFrontEq
@@ -39,19 +37,17 @@ class MyListComponentImpl(
     override val state: MutableValue<MyListState> = MutableValue(MyListState(config = config))
 
     override val navigation = StackNavigation<ComponentConfig>()
-    override val childStack: Value<ChildStack<ComponentConfig, ComponentView>> =
-        appChildStack(
-            source = navigation,
-            initialStack = { listOf(MediaItemConfig("anime", "completed")) },
-            childFactory = { key, context -> componentFactory.create(key, context) }
-        )
+    override val childStack: Value<ChildStack<ComponentConfig, ComponentView>> = appChildStack(
+        source = navigation,
+        initialStack = { listOf(MediaItemConfig("anime", "completed")) },
+        childFactory = { key, context -> componentFactory.create(key, context) })
 
-    override fun send(event: ComponentIntent) {
-        when (event) {
-            is OpenEntryDetailsIntent -> {
-                navigation.bringToFrontEq(config)
-            }
+    override fun send(event: ComponentIntent) = when (event) {
+        is OpenEntryDetailsIntent -> {
+            navigation.bringToFrontEq(config)
         }
+
+        else -> Unit
     }
 
 }
@@ -65,20 +61,17 @@ data class MyListState(
 interface MyListDIModule {
     @Provides
     @IntoMap
-    fun provideMyListComponent() =
-        provideComponent<MyListConfig> {
-            MyListComponentDI::class.create(appDI).creator(this, it)
-        }
+    fun provideMyListComponent() = provideComponent<MyListConfig> {
+        MyListComponentDI::class.create(appDI).creator(this, it)
+    }
 
     @Provides
     @IntoMap
-    fun provideMyListTab() =
-        provideTab<MyListConfig> {
-            TabMetadata(
-                config = it,
-                name = "My List"
-            )
-        }
+    fun provideMyListTab() = provideTab<MyListConfig> {
+        TabMetadata(
+            config = it, name = "My List"
+        )
+    }
 }
 
 @Component
