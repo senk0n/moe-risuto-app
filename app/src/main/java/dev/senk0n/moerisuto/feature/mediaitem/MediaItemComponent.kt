@@ -15,8 +15,8 @@ interface MediaItemComponent : ComponentView {
 }
 
 class MediaItemComponentImpl(
+    private val componentContext: ComponentContext,
     private val config: MediaItemConfig,
-    private val componentContext: ComponentContext
 ) : MediaItemComponent, ComponentContext by componentContext {
     override val state: MutableValue<MediaState> = MutableValue(MediaState(config = config))
 
@@ -37,5 +37,5 @@ interface MediaItemDIComponent {
     @Provides
     @IntoMap
     fun provideMediaItemComponent() =
-        provideComponent<MediaItemConfig> { MediaItemComponentImpl(it, this) }
+        provideComponent<MediaItemConfig> { MediaItemComponentImpl(this, it) }
 }
