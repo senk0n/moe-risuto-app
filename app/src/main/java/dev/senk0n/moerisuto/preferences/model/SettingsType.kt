@@ -1,10 +1,10 @@
 package dev.senk0n.moerisuto.preferences.model
 
-import dev.senk0n.moerisuto.preferences.model.SettingsPreference
+import dev.senk0n.moerisuto.core.navigation.ComponentConfig
 
 sealed interface SettingsType {
     interface Toggle : SettingsPreference<Boolean>
     interface Dropdown : SettingsPreference<String>
-    interface CustomSmall
-    interface CustomFull
+    data class CustomEmbedded(val config: ComponentConfig)
+    data class CustomFullscreen(val config: ComponentConfig)
 }
