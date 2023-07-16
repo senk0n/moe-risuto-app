@@ -14,7 +14,6 @@ import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
 import dev.senk0n.moerisuto.core.compose.LocalComposeFactory
 import dev.senk0n.moerisuto.core.compose.provideCompose
-import dev.senk0n.moerisuto.core.navigation.ComponentIntent
 import me.tatarka.inject.annotations.IntoMap
 import me.tatarka.inject.annotations.Provides
 
@@ -49,8 +48,7 @@ fun MyListContent(component: MyListComponent, modifier: Modifier) {
 interface MyListDIContent {
     @Provides
     @IntoMap
-    fun provideMyListContent() =
-        provideCompose<MyListComponentImpl> {
-            MyListContent(it, this)
-        }
+    fun provideMyListContent() = provideCompose<MyListComponentImpl> {
+        MyListContent(it, this)
+    }
 }

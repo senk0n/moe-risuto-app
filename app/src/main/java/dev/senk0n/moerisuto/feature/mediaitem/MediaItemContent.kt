@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.jetpack.subscribeAsState
 import dev.senk0n.moerisuto.core.compose.provideCompose
-import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.IntoMap
 import me.tatarka.inject.annotations.Provides
 
@@ -23,8 +22,7 @@ fun MediaItemContent(component: MediaItemComponent, modifier: Modifier) {
 interface MediaItemDIContent {
     @Provides
     @IntoMap
-    fun provideMediaItemContent() =
-        provideCompose<MediaItemComponentImpl> {
-            MediaItemContent(it, this)
-        }
+    fun provideMediaItemContent() = provideCompose<MediaItemComponentImpl> {
+        MediaItemContent(it, this)
+    }
 }
