@@ -1,5 +1,5 @@
 [versions]
-android-gradle-plugin = "8.2.0-alpha11"
+android-gradle-plugin = "8.1.0-rc01"
 androidx-junit = "1.1.5"
 decompose = "2.0.0-alpha-02"
 espresso-core = "3.5.1"
