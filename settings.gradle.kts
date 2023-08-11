@@ -1,18 +1,19 @@
 pluginManagement {
     repositories {
         google()
-        mavenCentral()
         gradlePluginPortal()
+        mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
+
 dependencyResolutionManagement {
-    @Suppress("UnstableApiUsage")
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    @Suppress("UnstableApiUsage")
     repositories {
         google()
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
+
 rootProject.name = "Moe Risuto"
-include(":app")
+include(":composeApp")
