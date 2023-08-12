@@ -42,7 +42,7 @@ kotlin {
     iosSimulatorArm64()
 
     cocoapods {
-        version = "1.0.0"
+        version = libs.versions.app.version.get()
         summary = "Compose application framework"
         homepage = "empty"
         ios.deploymentTarget = "11.0"
@@ -54,6 +54,7 @@ kotlin {
         extraSpecAttributes["resources"] = "['src/commonMain/resources/**']"
     }
 
+    @Suppress("UNUSED_VARIABLE")
     sourceSets {
         all {
             languageSettings {
@@ -144,7 +145,7 @@ android {
 
         applicationId = "dev.senk0n.moerisuto.androidApp"
         versionCode = 1
-        versionName = "1.0.0"
+        versionName = libs.versions.app.version.get()
     }
     sourceSets["main"].apply {
         manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -159,7 +160,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.compose.android.compiler.get()
     }
     packaging {
         resources {
@@ -179,7 +180,7 @@ compose.desktop {
                 TargetFormat.Deb,
             )
             packageName = "dev.senk0n.moerisuto.desktopApp"
-            packageVersion = "1.0.0"
+            packageVersion = libs.versions.app.version.get()
         }
     }
 }
