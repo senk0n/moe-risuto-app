@@ -115,7 +115,7 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 implementation(compose.web.core)
-                implementation(libs.sqlDelight.driver.sqljs)
+                implementation(libs.sqlDelight.driver.web)
             }
         }
 
