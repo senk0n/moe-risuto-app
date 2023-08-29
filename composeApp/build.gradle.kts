@@ -51,7 +51,6 @@ kotlin {
             baseName = "ComposeApp"
             isStatic = true
         }
-        extraSpecAttributes["resources"] = "['src/commonMain/resources/**']"
     }
 
     @Suppress("UNUSED_VARIABLE")
