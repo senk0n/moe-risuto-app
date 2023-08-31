@@ -21,7 +21,7 @@ plugins {
 kotlin {
     targetHierarchy.default()
 
-    android {
+    androidTarget {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "1.8"
@@ -142,7 +142,7 @@ android {
         minSdk = 28
         targetSdk = 33
 
-        applicationId = "dev.senk0n.moerisuto.androidApp"
+        applicationId = "dev.senk0n.moe.risuto.app"
         versionCode = 1
         versionName = libs.versions.app.version.get()
     }
@@ -178,7 +178,7 @@ compose.desktop {
                 TargetFormat.Msi,
                 TargetFormat.Deb,
             )
-            packageName = "dev.senk0n.moerisuto.desktopApp"
+            packageName = "dev.senk0n.moe.risuto.app"
             packageVersion = libs.versions.app.version.get()
         }
     }
@@ -190,7 +190,7 @@ compose.experimental {
 
 sqldelight {
     databases {
-        create("MyDatabase") {
+        create("MoeDatabase") {
             packageName.set("dev.senk0n.moerisuto.db")
         }
     }
