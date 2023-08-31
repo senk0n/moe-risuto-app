@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import dev.senk0n.moerisuto.Res
 import dev.senk0n.moerisuto.core.compose.ComposeFactoryDI
 import dev.senk0n.moerisuto.core.compose.LocalComposeFactory
 import dev.senk0n.moerisuto.core.compose.create
@@ -40,7 +41,7 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
             content = {
                 Column(modifier = Modifier.padding(it)) {
                     Text(text = "===========")
-                    Text(text = "RootContent")
+                    Text(text = Res.string.app_name)
                     Text(text = "===========")
                     Spacer(modifier = Modifier.height(8.dp))
 

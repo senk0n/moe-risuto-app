@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.kotlinx.serialization)
     alias(libs.plugins.sqlDelight)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.libres)
     id("kotlin-parcelize")
 }
 
@@ -79,6 +80,7 @@ kotlin {
                 implementation(libs.kotlinInject.runtime)
                 implementation(libs.decompose)
                 implementation(libs.decompose.compose.jetbrains)
+                implementation(libs.libres.compose)
             }
         }
 
@@ -186,6 +188,10 @@ compose.desktop {
 
 compose.experimental {
     web.application {}
+}
+
+libres {
+    generateNamedArguments = true
 }
 
 sqldelight {

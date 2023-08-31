@@ -19,6 +19,7 @@ ksp = "1.9.0-1.0.13"
 kotlin-inject = "0.6.1"
 
 decompose = "2.1.0-compose-experimental-alpha-07"
+libres = "1.2.0-beta01"
 composeImageLoader = "1.6.4"
 insetsx = "0.1.0-alpha10"
 napier = "2.6.1"
@@ -48,6 +49,7 @@ kotlinInject-runtime = { module = "me.tatarka.inject:kotlin-inject-runtime", ver
 decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-compose-jetbrains = { module = "com.arkivanov.decompose:extensions-compose-jetbrains", version.ref = "decompose" }
 decompose-android = { module = "com.arkivanov.decompose:extensions-android", version.ref = "decompose" }
+libres-compose = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
 composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "composeImageLoader" }
 insetsx = { module = "com.moriatsushi.insetsx:insetsx", version.ref = "insetsx" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
@@ -67,4 +69,5 @@ cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotli
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+libres = { id = "io.github.skeptick.libres", version.ref = "libres" }
 sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
