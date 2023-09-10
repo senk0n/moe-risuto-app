@@ -12,6 +12,7 @@ import dev.senk0n.moerisuto.core.navigation.ComponentView
 import dev.senk0n.moerisuto.core.navigation.provideComponent
 import dev.senk0n.moerisuto.core.navigation.tabs.AppDI
 import dev.senk0n.moerisuto.core.navigation.tabs.TabComponentView
+import dev.senk0n.moerisuto.core.navigation.tabs.TabIcon
 import dev.senk0n.moerisuto.core.navigation.tabs.TabMetadata
 import dev.senk0n.moerisuto.core.navigation.tabs.bringToFrontEq
 import dev.senk0n.moerisuto.core.navigation.tabs.provideTab
@@ -69,7 +70,7 @@ interface MyListDIModule {
     @IntoMap
     fun provideMyListTab() = provideTab<MyListConfig> {
         TabMetadata(
-            config = it, name = "My List"
+            config = it, name = "My List", icon = TabIcon.MyList
         )
     }
 }

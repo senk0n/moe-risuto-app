@@ -8,13 +8,13 @@ import dev.senk0n.moerisuto.feature.settings.SettingsConfig
 data class TabMetadata(
     val config: ComponentConfig,
     val name: String,
-    // TODO: val icon
+    val icon: TabIcon,
 )
 
 data class TabsMetadata(
     val mainTabs: List<TabMetadata> = listOf(
-        TabMetadata(MyListConfig("anime", "completed"), "anime"),
-        TabMetadata(SettingsConfig("42", "mushoku"), "settings"),
+        TabMetadata(MyListConfig("anime", "completed"), "anime", TabIcon.MyList),
+        TabMetadata(SettingsConfig("42", "mushoku"), "settings", TabIcon.Settings),
     ),
     val temporalTabs: List<TabMetadata> = listOf(),
 )

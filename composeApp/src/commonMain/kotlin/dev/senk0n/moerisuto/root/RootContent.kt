@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.outlined.Menu
+import androidx.compose.material.icons.rounded.List
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -26,6 +28,7 @@ import dev.senk0n.moerisuto.Res
 import dev.senk0n.moerisuto.core.compose.ComposeFactoryDI
 import dev.senk0n.moerisuto.core.compose.LocalComposeFactory
 import dev.senk0n.moerisuto.core.compose.create
+import dev.senk0n.moerisuto.core.compose.tabs.tabIcons
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,11 +63,15 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
                 ) {
                     val tabs by component.tabsMetadata.subscribeAsState()
                     tabs.mainTabs.forEach {
+                        val selected = it.config == childStack.active.configuration
                         NavigationBarItem(
-                            selected = it.config == childStack.active.configuration,
+                            selected = selected,
                             onClick = { component.send(ClickTab(it.config)) },
                             icon = {
-                                val icon = Icons.Outlined.List
+                                val tabIcon = tabIcons[it.icon]
+                                val icon = tabIcon?.let {
+                                    if (selected) tabIcon.second else tabIcon.first
+                                } ?: Icons.Outlined.Menu
                                 val painter = rememberVectorPainter(image = icon)
                                 Icon(painter = painter, null)
                             },
