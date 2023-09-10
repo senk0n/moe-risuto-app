@@ -70,7 +70,7 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 implementation(libs.composeImageLoader)
-                implementation(libs.napier)
+                implementation(libs.kermit)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.insetsx)
                 implementation(libs.ktor.core)
