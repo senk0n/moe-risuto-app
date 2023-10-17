@@ -2,14 +2,17 @@ package dev.senk0n.moerisuto.root
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.layout.waterfall
+import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Menu
-import androidx.compose.material.icons.rounded.List
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -30,7 +33,6 @@ import dev.senk0n.moerisuto.core.compose.LocalComposeFactory
 import dev.senk0n.moerisuto.core.compose.create
 import dev.senk0n.moerisuto.core.compose.tabs.tabIcons
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
     val composeFactoryDI = remember { ComposeFactoryDI::class.create() }
@@ -41,8 +43,13 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
         val childStack by component.tabStack.subscribeAsState()
         Scaffold(
             modifier = modifier,
+            contentWindowInsets = WindowInsets.waterfall,
             content = {
-                Column(modifier = Modifier.padding(it)) {
+                Column(modifier = Modifier
+                    .padding(it)
+                    .verticalScroll(rememberScrollState())
+                ) {
+                    Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeContent))
                     Text(text = "===========")
                     Text(text = Res.string.app_name)
                     Text(text = "===========")

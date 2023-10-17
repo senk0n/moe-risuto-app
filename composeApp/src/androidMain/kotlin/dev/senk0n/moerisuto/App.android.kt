@@ -3,6 +3,7 @@ package dev.senk0n.moerisuto
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.defaultComponentContext
@@ -12,6 +13,7 @@ import dev.senk0n.moerisuto.ui.theme.MoeRisutoTheme
 
 class AppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         val root = RootComponentImpl(defaultComponentContext())
         setContent {

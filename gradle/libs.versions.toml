@@ -21,7 +21,6 @@ kotlin-inject = "0.6.3"
 decompose = "2.1.2-compose-experimental"
 libres = "1.2.0-beta01"
 composeImageLoader = "1.6.7"
-insetsx = "0.1.0-alpha10"
 kermit = "2.0.1"
 
 sqlDelight = "2.0.0"
@@ -51,7 +50,6 @@ decompose-compose-jetbrains = { module = "com.arkivanov.decompose:extensions-com
 decompose-android = { module = "com.arkivanov.decompose:extensions-android", version.ref = "decompose" }
 libres-compose = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
 composeImageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "composeImageLoader" }
-insetsx = { module = "com.moriatsushi.insetsx:insetsx", version.ref = "insetsx" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 
 sqlDelight-driver-sqlite = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqlDelight" }

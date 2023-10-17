@@ -72,7 +72,6 @@ kotlin {
                 implementation(libs.composeImageLoader)
                 implementation(libs.kermit)
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.insetsx)
                 implementation(libs.ktor.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.datetime)
