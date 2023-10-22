@@ -1,4 +1,3 @@
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
 import com.arkivanov.decompose.DefaultComponentContext
@@ -18,6 +17,6 @@ fun MainViewController(): UIViewController {
         )
     )
     return ComposeUIViewController {
-        RootContent(component = root, modifier = Modifier.fillMaxSize())
+        RootContent(component = root, modifier = Modifier)
     }
 }

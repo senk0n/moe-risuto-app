@@ -3,6 +3,7 @@ package dev.senk0n.moerisuto.root
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -42,7 +43,7 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
     ) {
         val childStack by component.tabStack.subscribeAsState()
         Scaffold(
-            modifier = modifier,
+            modifier = modifier.fillMaxSize(),
             contentWindowInsets = WindowInsets.waterfall,
             content = {
                 Column(modifier = Modifier
