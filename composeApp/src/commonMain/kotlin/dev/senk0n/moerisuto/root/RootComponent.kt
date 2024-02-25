@@ -3,24 +3,30 @@ package dev.senk0n.moerisuto.root
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
+import com.arkivanov.decompose.router.stack.bringToFront
+import com.arkivanov.decompose.router.stack.childStack
+import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import dev.senk0n.moerisuto.core.navigation.ComponentConfig
+import dev.senk0n.moerisuto.core.navigation.ComponentDI
 import dev.senk0n.moerisuto.core.navigation.ComponentFactory
 import dev.senk0n.moerisuto.core.navigation.ComponentFactoryDI
 import dev.senk0n.moerisuto.core.navigation.ComponentIntent
 import dev.senk0n.moerisuto.core.navigation.ComponentView
+import dev.senk0n.moerisuto.core.navigation.SerializerProvider
 import dev.senk0n.moerisuto.core.navigation.create
 import dev.senk0n.moerisuto.core.navigation.tabs.AppDI
-import dev.senk0n.moerisuto.core.navigation.tabs.NavDI
-import dev.senk0n.moerisuto.core.navigation.tabs.RootNavigator
-import dev.senk0n.moerisuto.core.navigation.tabs.TabsMetadata
-import dev.senk0n.moerisuto.core.navigation.tabs.TabsNavigation
+import dev.senk0n.moerisuto.core.navigation.tabs.RootScope
+import dev.senk0n.moerisuto.core.navigation.tabs.TabFactory
+import dev.senk0n.moerisuto.core.navigation.tabs.TabMetadata
 import dev.senk0n.moerisuto.core.navigation.tabs.create
+import dev.senk0n.moerisuto.feature.mylist.MyListConfig
+import dev.senk0n.moerisuto.feature.settings.SettingsConfig
 import me.tatarka.inject.annotations.Component
 
 interface RootComponent : ComponentView {
     val tabStack: Value<ChildStack<ComponentConfig, ComponentView>>
-    val tabsMetadata: Value<TabsMetadata>
+    val tabsMetadata: Value<List<TabMetadata>>
 }
 
 class RootComponentImpl(
@@ -31,42 +37,47 @@ class RootComponentImpl(
     private val rootDI: RootDI
     init {
         val componentFactoryDI = ComponentFactoryDI::class.create()
-        val navDI = NavDI::class.create(
-            tabNavigation = tabNavigation,
-            tabStackProvider = { tabStack },
-        )
         val appDI = AppDI::class.create(
             componentFactoryDI = componentFactoryDI,
-            navDI = navDI,
         )
         rootDI = RootDI::class.create(
             appDI = appDI,
         )
     }
 
-    override val tabsMetadata: Value<TabsMetadata> = rootDI.tabsNavigation.tabs
+    private val initialStack = listOf(
+        MyListConfig("anime", "completed"),
+        SettingsConfig("42", "mushoku"),
+    )
 
-    private val appContext: AppContext = AppComponentContextImpl(componentContext, rootDI.appDI)
-    override val tabStack = appContext.appChildStack(
+    override val tabsMetadata: Value<List<TabMetadata>> = initialStack
+        .mapNotNull { rootDI.tabFactory.create(it) }
+        .let { MutableValue(it) }
+
+    override val tabStack = componentContext.childStack(
         source = tabNavigation,
-        initialStack = { tabsMetadata.value.mainTabs.take(1).map { it.config } },
-        childFactory = { key, context -> rootDI.componentFactory.create(key, context) }
+        serializer = null, //rootDI.serializerProvider.serializer(),
+        initialStack = { tabsMetadata.value.map { it.config } },
+        childFactory = { key, context ->
+            rootDI.componentFactory.run { create(key, context, rootDI) }
+        }
     )
 
     override fun send(event: ComponentIntent) {
         when (event) {
             is ClickTab -> {
-                rootDI.rootNavigator.navigateThroughTabs { switchTab(event.config) }
+                tabNavigation.bringToFront(event.config)
             }
         }
     }
 }
 
+@RootScope
 @Component
 abstract class RootDI(
     @Component val appDI: AppDI,
-) {
-    abstract val rootNavigator: RootNavigator
-    abstract val tabsNavigation: TabsNavigation
+) : ComponentDI {
     abstract val componentFactory: ComponentFactory
+    abstract val serializerProvider: SerializerProvider
+    abstract val tabFactory: TabFactory
 }

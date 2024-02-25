@@ -1,10 +1,13 @@
 package dev.senk0n.moerisuto.core.navigation
 
-import com.arkivanov.essenty.parcelable.Parcelable
-
-interface ComponentView {
+interface ComponentSink {
     fun send(event: ComponentIntent)
 }
 
-interface ComponentConfig : Parcelable
+interface ComponentView : ComponentSink
+fun interface ParentSink : ComponentSink
+
+interface ComponentConfig
+
 interface ComponentIntent
+interface ComponentDI

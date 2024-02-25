@@ -26,8 +26,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
-import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import com.arkivanov.decompose.extensions.compose.stack.Children
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import dev.senk0n.moerisuto.Res
 import dev.senk0n.moerisuto.core.compose.ComposeFactoryDI
 import dev.senk0n.moerisuto.core.compose.LocalComposeFactory
@@ -70,7 +70,7 @@ fun RootContent(component: RootComponent, modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     val tabs by component.tabsMetadata.subscribeAsState()
-                    tabs.mainTabs.forEach {
+                    tabs.forEach {
                         val selected = it.config == childStack.active.configuration
                         NavigationBarItem(
                             selected = selected,

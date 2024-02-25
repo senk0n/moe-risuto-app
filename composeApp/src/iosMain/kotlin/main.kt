@@ -5,6 +5,7 @@ import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.essenty.statekeeper.StateKeeperDispatcher
 import dev.senk0n.moerisuto.root.RootComponentImpl
 import dev.senk0n.moerisuto.root.RootContent
+import dev.senk0n.moerisuto.ui.theme.MoeRisutoTheme
 import platform.UIKit.UIViewController
 
 fun MainViewController(): UIViewController {
@@ -17,6 +18,8 @@ fun MainViewController(): UIViewController {
         )
     )
     return ComposeUIViewController {
-        RootContent(component = root, modifier = Modifier)
+        MoeRisutoTheme {
+            RootContent(component = root, modifier = Modifier)
+        }
     }
 }
