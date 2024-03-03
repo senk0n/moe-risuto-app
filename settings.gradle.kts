@@ -15,5 +15,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Moe Risuto"
+rootProject.name = "Moe-Risuto"
 include(":composeApp")

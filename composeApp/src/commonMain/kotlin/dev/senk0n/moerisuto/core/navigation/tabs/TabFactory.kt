@@ -4,6 +4,7 @@ import dev.senk0n.moerisuto.core.navigation.ComponentConfig
 import me.tatarka.inject.annotations.Inject
 import kotlin.reflect.KClass
 
+@RootScope
 @Inject
 class TabFactory(
     private val tabs: Map<KClass<out ComponentConfig>, TabMetaProvider>,

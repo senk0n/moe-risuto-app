@@ -5,7 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import dev.senk0n.moerisuto.core.compose.provideCompose
 import me.tatarka.inject.annotations.IntoMap
 import me.tatarka.inject.annotations.Provides
