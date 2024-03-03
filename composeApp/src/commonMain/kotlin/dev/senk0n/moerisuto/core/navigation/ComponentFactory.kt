@@ -16,7 +16,7 @@ class ComponentFactory(
         di: ComponentDI,
     ): ComponentView {
         val provider = providerMap[cfg::class]
-        val sink = ParentSink { send(it) }
+        val sink = ComponentSink { send(it) }
         return provider?.provide(cfg, context, di, sink)
             ?: providerMap[ComponentConfig::class]?.provide(cfg, context, di, sink)
             ?: error("no applicable ComponentProvider found")
@@ -28,12 +28,12 @@ fun interface ComponentProvider {
         config: ComponentConfig,
         context: ComponentContext,
         componentDI: ComponentDI,
-        parentSink: ParentSink,
+        parentSink: ComponentSink,
     ): ComponentView
 }
 
 inline fun <reified Config : ComponentConfig, reified ParentDI : ComponentDI> provideComponent(
-    crossinline provider: ComponentContext.(cfg: Config, di: ParentDI, ParentSink) -> ComponentView
+    crossinline provider: ComponentContext.(cfg: Config, di: ParentDI, ComponentSink) -> ComponentView
 ): Pair<KClass<out ComponentConfig>, ComponentProvider> =
     Config::class to ComponentProvider { config, context, componentDI, parentSink ->
         val cfg = config as Config

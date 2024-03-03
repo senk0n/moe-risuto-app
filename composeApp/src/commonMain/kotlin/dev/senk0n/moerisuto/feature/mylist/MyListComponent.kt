@@ -10,9 +10,9 @@ import dev.senk0n.moerisuto.core.model.Entry
 import dev.senk0n.moerisuto.core.navigation.ComponentConfig
 import dev.senk0n.moerisuto.core.navigation.ComponentFactory
 import dev.senk0n.moerisuto.core.navigation.ComponentIntent
+import dev.senk0n.moerisuto.core.navigation.ComponentSink
 import dev.senk0n.moerisuto.core.navigation.ComponentView
 import dev.senk0n.moerisuto.core.navigation.SerializerProvider
-import dev.senk0n.moerisuto.core.navigation.ParentSink
 import dev.senk0n.moerisuto.core.navigation.provideComponent
 import dev.senk0n.moerisuto.core.navigation.tabs.TabIcon
 import dev.senk0n.moerisuto.core.navigation.tabs.TabMetadata
@@ -45,7 +45,7 @@ data class MyListState(
 class MyListComponentImpl(
     @Assisted private val componentContext: ComponentContext,
     @Assisted private val config: MyListConfig,
-    @Assisted private val parentSink: ParentSink,
+    @Assisted private val parentSink: ComponentSink,
     private val rootDI: RootDI,
     private val componentFactory: ComponentFactory,
     private val serializerProvider: SerializerProvider,
@@ -98,5 +98,5 @@ abstract class MyListComponentDI(
 ) {
     @Provides
     fun MyListComponentImpl.bind(): MyListComponent = this
-    abstract val creator: (ComponentContext, MyListConfig, ParentSink) -> MyListComponent
+    abstract val creator: (ComponentContext, MyListConfig, ComponentSink) -> MyListComponent
 }

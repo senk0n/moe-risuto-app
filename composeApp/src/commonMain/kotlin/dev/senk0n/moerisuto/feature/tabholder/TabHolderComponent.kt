@@ -9,10 +9,9 @@ import com.arkivanov.decompose.value.Value
 import dev.senk0n.moerisuto.core.navigation.ComponentConfig
 import dev.senk0n.moerisuto.core.navigation.ComponentFactory
 import dev.senk0n.moerisuto.core.navigation.ComponentIntent
+import dev.senk0n.moerisuto.core.navigation.ComponentSink
 import dev.senk0n.moerisuto.core.navigation.ComponentView
-import dev.senk0n.moerisuto.core.navigation.ParentSink
 import dev.senk0n.moerisuto.core.navigation.SerializerProvider
-import dev.senk0n.moerisuto.feature.mediaitem.MediaItemConfig
 import dev.senk0n.moerisuto.root.RootDI
 import me.tatarka.inject.annotations.Assisted
 import me.tatarka.inject.annotations.Inject
@@ -31,7 +30,7 @@ data class TabHolderState(
 class TabHolderComponentImpl(
     @Assisted private val componentContext: ComponentContext,
     @Assisted private val config: TabHolderConfig,
-    @Assisted private val parentSink: ParentSink,
+    @Assisted private val parentSink: ComponentSink,
     private val rootDI: RootDI,
     private val componentFactory: ComponentFactory,
     private val serializerProvider: SerializerProvider,

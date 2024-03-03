@@ -6,8 +6,8 @@ import com.arkivanov.decompose.value.Value
 import dev.senk0n.moerisuto.core.navigation.ComponentConfig
 import dev.senk0n.moerisuto.core.navigation.ComponentFactory
 import dev.senk0n.moerisuto.core.navigation.ComponentIntent
+import dev.senk0n.moerisuto.core.navigation.ComponentSink
 import dev.senk0n.moerisuto.core.navigation.ComponentView
-import dev.senk0n.moerisuto.core.navigation.ParentSink
 import dev.senk0n.moerisuto.core.navigation.provideComponent
 import dev.senk0n.moerisuto.core.navigation.tabs.TabIcon
 import dev.senk0n.moerisuto.core.navigation.tabs.TabMetadata
@@ -32,7 +32,7 @@ interface SettingsComponent : ComponentView {
 class SettingsComponentImpl(
     @Assisted private val componentContext: ComponentContext,
     @Assisted private val config: SettingsConfig,
-    @Assisted private val parentSink: ParentSink,
+    @Assisted private val parentSink: ComponentSink,
     private val componentFactory: ComponentFactory,
 ) : SettingsComponent, ComponentContext by componentContext {
     override val state: MutableValue<SettingsState> = MutableValue(SettingsState(config = config))
@@ -76,5 +76,5 @@ abstract class SettingsComponentDI(
 ) {
     @Provides
     fun SettingsComponentImpl.bind(): SettingsComponent = this
-    abstract val creator: (ComponentContext, SettingsConfig, ParentSink) -> SettingsComponent
+    abstract val creator: (ComponentContext, SettingsConfig, ComponentSink) -> SettingsComponent
 }

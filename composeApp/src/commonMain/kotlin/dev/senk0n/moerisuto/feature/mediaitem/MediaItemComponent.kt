@@ -6,8 +6,8 @@ import com.arkivanov.decompose.value.Value
 import dev.senk0n.moerisuto.core.model.Media
 import dev.senk0n.moerisuto.core.navigation.ComponentConfig
 import dev.senk0n.moerisuto.core.navigation.ComponentIntent
+import dev.senk0n.moerisuto.core.navigation.ComponentSink
 import dev.senk0n.moerisuto.core.navigation.ComponentView
-import dev.senk0n.moerisuto.core.navigation.ParentSink
 import dev.senk0n.moerisuto.core.navigation.provideComponent
 import dev.senk0n.moerisuto.root.RootDI
 import kotlinx.serialization.modules.SerializersModule
@@ -28,7 +28,7 @@ interface MediaItemComponent : ComponentView {
 class MediaItemComponentImpl(
     @Assisted private val componentContext: ComponentContext,
     @Assisted private val config: MediaItemConfig,
-    @Assisted private val parentSink: ParentSink,
+    @Assisted private val parentSink: ComponentSink,
 ) : MediaItemComponent, ComponentContext by componentContext {
     override val state: MutableValue<MediaState> = MutableValue(MediaState(config = config))
 
@@ -66,5 +66,5 @@ abstract class MediaItemComponentDI(
 ) {
     @Provides
     fun MediaItemComponentImpl.bind(): MediaItemComponent = this
-    abstract val creator: (ComponentContext, MediaItemConfig, ParentSink) -> MediaItemComponent
+    abstract val creator: (ComponentContext, MediaItemConfig, ComponentSink) -> MediaItemComponent
 }
